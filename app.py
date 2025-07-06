@@ -29,6 +29,9 @@ def js_get_stock_data(ticker, period='6mo'):
     # Obtém os dados históricos do preço da ação para o periodo definido
     hist = stock.history(period=period)
 
+    # Reseta o índice do DataFrame para transformar a coluna de data em uma coluna normal
+    hist.reset_index(inplace=True)
+
     # Retorna o DataFrame com os dados históricos    
     return hist
 
