@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from phi.agent import Agent
 from phi.model.groq  import Groq
-from phi.model.openai import OpenAI
+#from phi.model.openai import OpenAI
 from phi.model.anthropic import Claude
 from phi.tools.yfinance import YFinanceTools
 from phi.tools.duckduckgo import DuckDuckGo
@@ -272,7 +272,7 @@ with tab1:
         st.sidebar.write("Dúvidas: (98) 98151-9965")
 
     # Título principal
-    st.title(":100: Jonh Selmo DayTrade Analytics")
+    st.title("🤖 Jonh Selmo DayTrade Analytics")
 
     # Interface principal
     st.header("Day Trade Analytics em Tempo Real com Agentes de IA")
