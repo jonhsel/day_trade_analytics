@@ -119,7 +119,7 @@ def js_create_agents(provider, model_name, api_key=None):
     Cria os agentes de IA baseados no provedor selecionado
     """
     # Modelo principal para agentes especializados
-    main_model = dsa_create_model(provider, model_name, api_key)
+    main_model = js_create_model(provider, model_name, api_key)
     
     # Modelo para o agente coordenador (sempre usa um modelo versátil)
     if provider == "Claude/Anthropic":
@@ -156,102 +156,19 @@ def js_create_agents(provider, model_name, api_key=None):
 ########## App Web ##########
 
 # Configuração da página do Streamlit
-st.set_page_config(page_title="Jonh Selmo DayTrade", page_icon=":100:", layout="wide")
+st.set_page_config(page_title="Data Science Academy", page_icon=":100:", layout="wide")
 
-# Criação das abas
-tab1, tab2 = st.tabs(["📊 Análise de Ações", "⚙️ Configuração de API"])
+# Barra Lateral com abas
+st.sidebar.title("Configurações")
 
-with tab2:
-    st.header("⚙️ Configuração de API")
-    
-    # Seleção do provedor
-    provider = st.selectbox(
-        "Selecione o Provedor de IA:",
-        ["Groq", "Claude/Anthropic"],
-        index=0
-    )
-    
-    # Configuração baseada no provedor selecionado
-    if provider == "Groq":
-        st.info("🔧 **Groq (Padrão)** - Usando variáveis de ambiente")
-        
-        model_options = [
-            "deepseek-r1-distill-llama-70b",
-            "llama-3.3-70b-versatile",
-            "llama-3.1-70b-versatile",
-            "mixtral-8x7b-32768"
-        ]
-        
-        selected_model = st.selectbox(
-            "Modelo Groq:",
-            model_options,
-            index=0
-        )
-        
-        st.markdown("""
-        **Instruções:**
-        - Configure sua `GROQ_API_KEY` no arquivo `.env`
-        - Modelos disponíveis via Groq com alta performance
-        """)
-        
-        api_key_input = None
-        
-    elif provider == "Claude/Anthropic":
-        st.info("🧠 **Claude/Anthropic** - Modelos de IA avançados")
-        
-        model_options = [
-            "claude-3-5-sonnet-20241022",
-            "claude-3-5-haiku-20241022",
-            "claude-3-opus-20240229"
-        ]
-        
-        selected_model = st.selectbox(
-            "Modelo Claude:",
-            model_options,
-            index=0
-        )
-        
-        # Campo para API key
-        api_key_input = st.text_input(
-            "Anthropic API Key:",
-            type="password",
-            placeholder="sk-ant-api03-...",
-            help="Insira sua chave de API da Anthropic"
-        )
-        
-        st.markdown("""
-        **Instruções:**
-        - Obtenha sua API key em: https://console.anthropic.com/
-        - Claude oferece análises mais detalhadas e precisas
-        - Modelos mais recentes com melhor compreensão contextual
-        """)
-        
-        if not api_key_input:
-            st.warning("⚠️ Por favor, insira sua Anthropic API Key para usar os modelos Claude")
-    
-    # Salvar configurações na sessão
-    st.session_state['provider'] = provider
-    st.session_state['model_name'] = selected_model
-    st.session_state['api_key'] = api_key_input
-    
-    # Botão para testar configuração
-    if st.button("🧪 Testar Configuração"):
-        try:
-            if provider == "Claude/Anthropic" and not api_key_input:
-                st.error("❌ API Key da Anthropic é obrigatória!")
-            else:
-                test_model = js_create_model(provider, selected_model, api_key_input)
-                st.success(f"✅ Configuração válida! Usando {provider} com modelo {selected_model}")
-        except Exception as e:
-            st.error(f"❌ Erro na configuração: {str(e)}")
+# Criação das abas na sidebar
+sidebar_tab1, sidebar_tab2 = st.sidebar.tabs(["📋 Instruções", "⚙️ Configuração"])
 
-with tab1:
-    # Barra Lateral com instruções
-    st.sidebar.title("Instruções")
-    st.sidebar.markdown("""
+with sidebar_tab1:
+    st.markdown("""
     ### Como Utilizar a App:
 
-    1. **Configure a API** na aba "Configuração de API"
+    1. **Configure a API** na aba "Configuração"
     2. Insira o símbolo do ticker da ação desejada
     3. Clique no botão **Analisar** para análise em tempo real
 
@@ -261,80 +178,176 @@ with tab1:
     - AMZN (Amazon)
     - GOOG (Alphabet)
 
-    Mais tickers: https://stockanalysis.com/list/nasdaq-stocks/
+    Mais tickers podem ser encontrados aqui: https://stockanalysis.com/list/nasdaq-stocks/
 
     ### Finalidade da App:
-    Análises avançadas de ações da Nasdaq em tempo real com Agentes de IA usando DeepSeek (Groq) ou Claude (Anthropic) para estratégias de Day Trade.
+    Este aplicativo realiza análises avançadas de preços de ações da Nasdaq em tempo real utilizando Agentes de IA com modelos DeepSeek (via Groq) ou Claude (Anthropic) para apoio a estratégias de Day Trade para monetização.
     """)
-
-    # Botão de suporte na barra lateral
-    if st.sidebar.button("Suporte"):
-        st.sidebar.write("Dúvidas: (98) 98151-9965")
-
-    # Título principal
-    st.title("🤖 Jonh Selmo DayTrade Analytics")
-
-    # Interface principal
-    st.header("Day Trade Analytics em Tempo Real com Agentes de IA")
     
-    # Mostrar configuração atual
-    current_provider = st.session_state.get('provider', 'Groq')
-    current_model = st.session_state.get('model_name', 'deepseek-r1-distill-llama-70b')
+    # Botão de suporte
+    if st.button("Suporte"):
+        st.write("No caso de dúvidas envie e-mail para: suporte@datascienceacademy.com.br")
+
+with sidebar_tab2:
+    st.markdown("### Provedor de IA")
     
-    st.info(f"🤖 **Configuração Atual:** {current_provider} - {current_model}")
+    # Seleção do provedor
+    provider = st.selectbox(
+        "Selecione o Provedor:",
+        ["Groq", "Claude/Anthropic"],
+        index=0,
+        key="provider_select"
+    )
+    
+    # Configuração baseada no provedor selecionado
+    if provider == "Groq":
+        st.info("🔧 **Groq** - Usando variáveis de ambiente")
+        
+        model_options = [
+            "deepseek-r1-distill-llama-70b",
+            "llama-3.3-70b-versatile",
+            "llama-3.1-70b-versatile",
+            "mixtral-8x7b-32768"
+        ]
+        
+        selected_model = st.selectbox(
+            "Modelo:",
+            model_options,
+            index=0,
+            key="groq_model_select"
+        )
+        
+        st.markdown("""
+        **Instruções:**
+        - Configure `GROQ_API_KEY` no arquivo `.env`
+        - Modelos com alta performance
+        """)
+        
+        api_key_input = None
+        
+    elif provider == "Claude/Anthropic":
+        st.info("🧠 **Claude/Anthropic** - IA Avançada")
+        
+        model_options = [
+            "claude-3-5-sonnet-20241022",
+            "claude-3-5-haiku-20241022",
+            "claude-3-opus-20240229"
+        ]
+        
+        selected_model = st.selectbox(
+            "Modelo:",
+            model_options,
+            index=0,
+            key="claude_model_select"
+        )
+        
+        # Campo para API key
+        api_key_input = st.text_input(
+            "API Key:",
+            type="password",
+            placeholder="sk-ant-api03-...",
+            help="Insira sua chave da Anthropic",
+            key="claude_api_key"
+        )
+        
+        st.markdown("""
+        **Instruções:**
+        - API key: https://console.anthropic.com/
+        - Análises mais detalhadas
+        - Melhor compreensão contextual
+        """)
+        
+        if not api_key_input:
+            st.warning("⚠️ Insira sua API Key da Anthropic")
+    
+    # Salvar configurações na sessão
+    st.session_state['provider'] = provider
+    st.session_state['model_name'] = selected_model
+    st.session_state['api_key'] = api_key_input
+    
+    # Botão para testar configuração
+    if st.button("🧪 Testar", key="test_config"):
+        try:
+            if provider == "Claude/Anthropic" and not api_key_input:
+                st.error("❌ API Key obrigatória!")
+            else:
+                test_model = js_create_model(provider, selected_model, api_key_input)
+                st.success(f"✅ Configuração OK!")
+                st.info(f"🤖 {provider} - {selected_model}")
+        except Exception as e:
+            st.error(f"❌ Erro: {str(e)}")
 
-    # Caixa de texto para input do usuário
-    ticker = st.text_input("Digite o Código (símbolo do ticker):").upper()
+# Título principal
+st.title("📊 JONH - Jointed Organization of Not-neural Humans")
 
-    # Se o usuário pressionar o botão, entramos neste bloco
-    if st.button("Analisar"):
+# Interface principal
+st.header("Day Trade Analytics em Tempo Real com Agentes de IA")
 
-        # Verificar se Claude está configurado corretamente
-        if st.session_state.get('provider') == 'Claude/Anthropic' and not st.session_state.get('api_key'):
-            st.error("❌ Por favor, configure sua API Key da Anthropic na aba 'Configuração de API'")
-            st.stop()
+# Mostrar configuração atual
+current_provider = st.session_state.get('provider', 'Groq')
+current_model = st.session_state.get('model_name', 'deepseek-r1-distill-llama-70b')
 
-        # Se temos o código da ação (ticker)
-        if ticker:
+# Status da configuração
+if current_provider == "Claude/Anthropic":
+    has_api_key = bool(st.session_state.get('api_key'))
+    if has_api_key:
+        st.success(f"🤖 **Configuração Ativa:** {current_provider} - {current_model}")
+    else:
+        st.warning(f"⚠️ **Configuração Incompleta:** {current_provider} - Configure API Key na sidebar")
+else:
+    st.success(f"🤖 **Configuração Ativa:** {current_provider} - {current_model}")
 
-            # Inicia o processamento
-            with st.spinner("Buscando os Dados em Tempo Real. Aguarde..."):
+# Caixa de texto para input do usuário
+ticker = st.text_input("Digite o Código (símbolo do ticker):").upper()
+
+# Se o usuário pressionar o botão, entramos neste bloco
+if st.button("Analisar"):
+
+    # Verificar se Claude está configurado corretamente
+    if st.session_state.get('provider') == 'Claude/Anthropic' and not st.session_state.get('api_key'):
+        st.error("❌ Por favor, configure sua API Key da Anthropic na sidebar → Configuração")
+        st.stop()
+
+    # Se temos o código da ação (ticker)
+    if ticker:
+
+        # Inicia o processamento
+        with st.spinner("Buscando os Dados em Tempo Real. Aguarde..."):
+            
+            try:
+                # Obtém os dados
+                hist = js_get_stock_data(ticker)
                 
-                try:
-                    # Obtém os dados
-                    hist = js_get_stock_data(ticker)
-                    
-                    # Cria os agentes com a configuração atual
-                    multi_ai_agent = js_create_agents(
-                        st.session_state.get('provider', 'Groq'),
-                        st.session_state.get('model_name', 'deepseek-r1-distill-llama-70b'),
-                        st.session_state.get('api_key')
-                    )
-                    
-                    # Renderiza um subtítulo
-                    st.subheader("Análise Gerada Por IA")
-                    
-                    # Executa o time de Agentes de IA
-                    ai_response = multi_ai_agent.run(f"Resumir a recomendação do analista e compartilhar as últimas notícias para {ticker}")
+                # Cria os agentes com a configuração atual
+                multi_ai_agent = js_create_agents(
+                    st.session_state.get('provider', 'Groq'),
+                    st.session_state.get('model_name', 'deepseek-r1-distill-llama-70b'),
+                    st.session_state.get('api_key')
+                )
+                
+                # Renderiza um subtítulo
+                st.subheader("Análise Gerada Por IA")
+                
+                # Executa o time de Agentes de IA
+                ai_response = multi_ai_agent.run(f"Resumir a recomendação do analista e compartilhar as últimas notícias para {ticker}")
 
-                    # Remove linhas que começam com "Running:"
-                    # Remove o bloco "Running:" e também linhas "transfer_task_to_finance_ai_agent"
-                    clean_response = re.sub(r"(Running:[\s\S]*?\n\n)|(^transfer_task_to_finance_ai_agent.*\n?)","", ai_response.content, flags=re.MULTILINE).strip()
+                # Remove linhas que começam com "Running:"
+                # Remove o bloco "Running:" e também linhas "transfer_task_to_finance_ai_agent"
+                clean_response = re.sub(r"(Running:[\s\S]*?\n\n)|(^transfer_task_to_finance_ai_agent.*\n?)","", ai_response.content, flags=re.MULTILINE).strip()
 
-                    # Imprime a resposta
-                    st.markdown(clean_response)
+                # Imprime a resposta
+                st.markdown(clean_response)
 
-                    # Renderiza os gráficos
-                    st.subheader("Visualização dos Dados")
-                    js_plot_stock_price(hist, ticker)
-                    js_plot_candlestick(hist, ticker)
-                    js_plot_media_movel(hist, ticker)
-                    js_plot_volume(hist, ticker)
-                    
-                except Exception as e:
-                    st.error(f"❌ Erro durante a análise: {str(e)}")
-                    st.info("💡 Verifique se a configuração da API está correta na aba 'Configuração de API'")
-        else:
-            st.error("Ticker inválido. Insira um símbolo de ação válido.")
-
+                # Renderiza os gráficos
+                st.subheader("Visualização dos Dados")
+                js_plot_stock_price(hist, ticker)
+                js_plot_candlestick(hist, ticker)
+                js_plot_media_movel(hist, ticker)
+                js_plot_volume(hist, ticker)
+                
+            except Exception as e:
+                st.error(f"❌ Erro durante a análise: {str(e)}")
+                st.info("💡 Verifique se a configuração da API está correta na sidebar")
+    else:
+        st.error("Ticker inválido. Insira um símbolo de ação válido.")
 
