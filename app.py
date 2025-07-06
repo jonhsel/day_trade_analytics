@@ -159,7 +159,7 @@ def js_create_agents(provider, model_name, api_key=None):
 ########## App Web ##########
 
 # Configuração da página do Streamlit
-st.set_page_config(page_title="Data Science Academy", page_icon=":100:", layout="wide")
+st.set_page_config(page_title="JONH DAY TRADE", page_icon="🤖", layout="wide")
 
 # Barra Lateral com abas
 st.sidebar.title("Configurações")
