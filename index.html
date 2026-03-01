@@ -893,9 +893,15 @@
 <!-- ── ARTICLE BODY ── -->
 <article class="article-body">
 
-  <p class="lead fade-in">
+  <p class="lead fade-i">
     O mercado financeiro é, por natureza, um ambiente de <strong>informação assimétrica e ritmo acelerado</strong>. Traders que operam em day trade precisam sintetizar dezenas de fontes — preços em tempo real, notícias corporativas, recomendações de analistas, indicadores técnicos — em questão de segundos. O projeto <strong>JONH</strong> (<em>Jointed Organization of Not-neural Humans</em>) nasce exatamente para resolver esse gargalo: uma plataforma de análise financeira alimentada por agentes de IA que trabalham em equipe para entregar insights acionáveis sobre qualquer ação da Nasdaq.
   </p>
+
+  <div class="header-ornament">
+      <figure style="margin-top:24px;">
+        <img src="images/12.png" alt="Ilustração: app day trade" style="width:100%;max-width:720px;height:auto;border-radius:8px;display:block;margin:0 auto;box-shadow:0 8px 24px rgba(26,20,16,0.12);">
+      </figure>
+  </div>
 
   <!-- ── SEÇÃO 1 ── -->
   <h2 id="contexto" data-num="01 — Contexto" class="fade-in">Contexto e Motivação</h2>
@@ -1076,6 +1082,13 @@
 
   <p class="fade-in">O DataFrame retornado pelo <code>yfinance</code> contém colunas padronizadas — <code>Date</code>, <code>Open</code>, <code>High</code>, <code>Low</code>, <code>Close</code>, <code>Volume</code> — que alimentam diretamente as quatro funções de visualização da aplicação, sem necessidade de transformação adicional além do <code>reset_index</code> para normalizar a coluna de datas.</p>
 
+  <div class="header-ornament">
+      <figure style="margin-top:24px;">
+        <img src="images/13.png" alt="Ilustração: app day trade" style="width:100%;max-width:720px;height:auto;border-radius:8px;display:block;margin:0 auto;box-shadow:0 8px 24px rgba(26,20,16,0.12);">
+      </figure>
+  </div>
+
+
   <div class="ornament fade-in">— ✦ —</div>
 
   <!-- ── SEÇÃO 6 ── -->
@@ -1086,8 +1099,21 @@
   <h3>Gráfico de Linha de Preços</h3>
   <p class="fade-in">O gráfico mais simples e direto: evolução do preço de fechamento nos últimos 6 meses com marcadores em cada ponto de dado. Gerado via <code>px.line()</code> do Plotly Express, permite identificar tendências gerais e níveis de suporte e resistência visualmente.</p>
 
+  <div class="header-ornament">
+      <figure style="margin-top:24px;">
+        <img src="images/14.png" alt="Ilustração: app day trade" style="width:100%;max-width:720px;height:auto;border-radius:8px;display:block;margin:0 auto;box-shadow:0 8px 24px rgba(26,20,16,0.12);">
+      </figure>
+  </div>
+
+
   <h3>Candlestick Chart</h3>
   <p class="fade-in">A linguagem nativa dos traders. Cada vela representa um dia de negociação, codificando abertura, fechamento, máxima e mínima em um único elemento visual. Velas verdes (fechamento acima da abertura) e vermelhas (fechamento abaixo) permitem identificar padrões como <em>doji</em>, <em>hammer</em> e <em>engolfo</em> sem processamento adicional. Implementado via <code>go.Candlestick()</code> do Plotly Graph Objects.</p>
+
+  <div class="header-ornament">
+      <figure style="margin-top:24px;">
+        <img src="images/15.png" alt="Ilustração: app day trade" style="width:100%;max-width:720px;height:auto;border-radius:8px;display:block;margin:0 auto;box-shadow:0 8px 24px rgba(26,20,16,0.12);">
+      </figure>
+  </div>
 
   <h3>Médias Móveis (SMA e EMA)</h3>
   <p class="fade-in">Calculadas diretamente no DataFrame antes da plotagem. A <strong>SMA-20</strong> (Média Móvel Simples de 20 períodos) é calculada com <code>rolling(window=20).mean()</code>, enquanto a <strong>EMA-20</strong> (Média Móvel Exponencial) usa <code>ewm(span=20, adjust=False).mean()</code>. A diferença prática: a EMA dá mais peso aos dados recentes, reagindo mais rapidamente a mudanças de tendência — preferida por traders de curto prazo.</p>
