@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>JONH — Cards para Redes Sociais</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0e0e0e;
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 64px;
+    padding: 60px 24px 80px;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #555;
+    text-align: center;
+    margin-bottom: -40px;
+    align-self: flex-start;
+    padding-left: 4px;
+  }
+
+  /* ────────────────────────────────────
+     INSTAGRAM CARD — 1080×1080 (1:1)
+     displayed at 540×540
+  ──────────────────────────────────── */
+  .ig-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .ig-card {
+    width: 540px;
+    height: 540px;
+    background: #06150a;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* mesh gradient bg */
+  .ig-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 20%, rgba(0,220,100,0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 10% 85%, rgba(0,180,80,0.09) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 40% at 50% 100%, rgba(212,160,23,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* grid lines */
+  .ig-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,220,100,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,220,100,0.03) 1px, transparent 1px);
+    background-size: 54px 54px;
+    pointer-events: none;
+  }
+
+  .ig-inner {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 38px 36px;
+  }
+
+  .ig-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: auto;
+  }
+
+  .ig-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #00dc64;
+    background: rgba(0,220,100,0.08);
+    border: 1px solid rgba(0,220,100,0.25);
+    padding: 5px 12px;
+    border-radius: 2px;
+  }
+
+  .ig-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  /* big ticker display */
+  .ig-ticker-block {
+    margin: 28px 0 20px;
+  }
+
+  .ig-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 8px;
+  }
+
+  .ig-tickers {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .ig-ticker {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 4px 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .ig-main-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1.0;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+
+  .ig-main-title span {
+    color: #00dc64;
+  }
+
+  .ig-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+    line-height: 1.55;
+    max-width: 380px;
+    margin-bottom: 28px;
+  }
+
+  /* stat row */
+  .ig-stats {
+    display: flex;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: 28px;
+  }
+
+  .ig-stat {
+    flex: 1;
+    padding: 12px 16px;
+    border-right: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .ig-stat:last-child { border-right: none; }
+
+  .ig-stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #00dc64;
+    line-height: 1;
+  }
+
+  .ig-stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-top: 3px;
+  }
+
+  /* tags */
+  .ig-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .ig-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    padding: 3px 9px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .ig-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ig-cta-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    font-style: italic;
+  }
+
+  .ig-arrow {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(0,220,100,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00dc64;
+    font-size: 20px;
+  }
+
+  /* chart decoration */
+  .ig-chart-deco {
+    position: absolute;
+    right: -20px;
+    top: 60px;
+    width: 220px;
+    height: 180px;
+    opacity: 0.07;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ────────────────────────────────────
+     LINKEDIN CARD — 1200×628 (approx)
+     displayed at 720×376
+  ──────────────────────────────────── */
+  .li-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .li-card {
+    width: 720px;
+    height: 376px;
+    background: #060d08;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .li-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 80% at 100% 50%, rgba(0,200,90,0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 60% at 0% 0%, rgba(0,160,70,0.07) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* vertical lines */
+  .li-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(90deg, rgba(0,220,100,0.04) 1px, transparent 1px);
+    background-size: 60px 100%;
+    pointer-events: none;
+  }
+
+  .li-inner {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+  }
+
+  /* LEFT PANEL */
+  .li-left {
+    width: 360px;
+    flex-shrink: 0;
+    padding: 38px 40px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .li-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .li-brand-dot {
+    width: 8px;
+    height: 8px;
+    background: #00dc64;
+    border-radius: 50%;
+  }
+
+  .li-brand-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .li-headline {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.05;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  .li-headline em {
+    font-style: italic;
+    color: #00dc64;
+    font-weight: 700;
+  }
+
+  .li-deck {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: auto;
+    max-width: 280px;
+  }
+
+  .li-bottom {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .li-tags-mini {
+    display: flex;
+    gap: 5px;
+  }
+
+  .li-tag-mini {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #00dc64;
+    background: rgba(0,220,100,0.07);
+    border: 1px solid rgba(0,220,100,0.15);
+    padding: 2px 7px;
+  }
+
+  .li-cta-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #060d08;
+    background: #00dc64;
+    padding: 7px 14px;
+    border-radius: 1px;
+  }
+
+  /* RIGHT PANEL */
+  .li-right {
+    flex: 1;
+    padding: 34px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .li-right-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    margin-bottom: 2px;
+  }
+
+  /* mini agent cards */
+  .li-agents {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .li-agent-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .li-agent-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background: rgba(0,220,100,0.08);
+    flex-shrink: 0;
+  }
+
+  .li-agent-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .li-agent-desc {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    margin-left: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* stats row */
+  .li-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .li-stat-card {
+    padding: 12px 12px 10px;
+    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(0,220,100,0.03);
+  }
+
+  .li-stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #00dc64;
+    line-height: 1;
+  }
+
+  .li-stat-lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* floating chart decoration */
+  .chart-line {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 80px;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  /* ── CAPTION BOXES ── */
+  .caption-box {
+    width: 100%;
+    max-width: 540px;
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 2px;
+    padding: 20px 24px;
+  }
+
+  .li-wrap .caption-box { max-width: 720px; }
+
+  .caption-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #00dc64;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .caption-label::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: #00dc64;
+    opacity: 0.5;
+  }
+
+  .caption-text {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.7;
+  }
+
+  .caption-text strong { color: #ccc; font-weight: 500; }
+  .caption-text em { color: #00dc64; font-style: normal; }
+
+  /* ── PAGE TITLE ── */
+  .page-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #333;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .page-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #2a2a2a;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 800px) {
+    .ig-card { width: 100%; max-width: 420px; height: auto; aspect-ratio: 1/1; }
+    .li-card { width: 100%; height: auto; }
+    .li-inner { flex-direction: column; }
+    .li-left { width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .caption-box, .li-wrap .caption-box { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-title">JONH — Cards para Redes Sociais</div>
+<div class="page-sub">Instagram (1:1) &nbsp;·&nbsp; LinkedIn (1.91:1)</div>
+
+<!-- ══════════════════════════════════
+     INSTAGRAM CARD
+══════════════════════════════════ -->
+<div class="ig-wrap">
+  <div class="section-label">Instagram — 1080 × 1080 px</div>
+
+  <div class="ig-card">
+
+    <!-- decorative SVG chart -->
+    <svg class="ig-chart-deco" viewBox="0 0 220 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="0,160 30,130 55,140 80,90 110,100 130,55 155,70 180,30 220,40" stroke="#00dc64" stroke-width="2" fill="none"/>
+      <polyline points="0,160 30,130 55,140 80,90 110,100 130,55 155,70 180,30 220,40 220,180 0,180" fill="rgba(0,220,100,0.06)"/>
+    </svg>
+
+    <div class="ig-inner">
+      <div class="ig-top">
+        <span class="ig-badge">IA Financeira</span>
+        <span class="ig-logo">JONH</span>
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+        <div class="ig-ticker-block">
+          <div class="ig-eyebrow">Analisando em tempo real</div>
+          <div class="ig-tickers">
+            <span class="ig-ticker">TSLA</span>
+            <span class="ig-ticker">MSFT</span>
+            <span class="ig-ticker">AMZN</span>
+            <span class="ig-ticker">GOOG</span>
+          </div>
+        </div>
+
+        <div class="ig-main-title">Agentes de IA<br>para <span>Day&nbsp;Trade</span></div>
+        <div class="ig-sub">Análise fundamentalista, notícias e gráficos em tempo real — tudo orquestrado por inteligência artificial.</div>
+
+        <div class="ig-stats">
+          <div class="ig-stat">
+            <div class="ig-stat-val">3</div>
+            <div class="ig-stat-label">Agentes IA</div>
+          </div>
+          <div class="ig-stat">
+            <div class="ig-stat-val">4</div>
+            <div class="ig-stat-label">Gráficos</div>
+          </div>
+          <div class="ig-stat">
+            <div class="ig-stat-val">6</div>
+            <div class="ig-stat-label">Modelos LLM</div>
+          </div>
+          <div class="ig-stat">
+            <div class="ig-stat-val">RT</div>
+            <div class="ig-stat-label">Tempo real</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="ig-tags">
+          <span class="ig-tag">#DayTrade</span>
+          <span class="ig-tag">#InteligênciaArtificial</span>
+          <span class="ig-tag">#Phidata</span>
+          <span class="ig-tag">#Python</span>
+          <span class="ig-tag">#Nasdaq</span>
+        </div>
+
+        <div class="ig-cta">
+          <span class="ig-cta-text">Link na bio · Artigo completo</span>
+          <div class="ig-arrow">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-label">Caption Instagram</div>
+    <div class="caption-text">
+      🤖 Acabei de construir um assistente de <strong>Day Trade com IA</strong> do zero!<br><br>
+      O <em>JONH</em> usa <strong>3 agentes de IA</strong> trabalhando em equipe para analisar ações da Nasdaq em tempo real: um agente busca notícias na web, outro acessa dados do Yahoo Finance, e um coordenador sintetiza tudo numa análise coerente.<br><br>
+      📊 Gráficos interativos de preço, candlestick, médias móveis e volume.<br>
+      🧠 Compatível com <strong>Claude (Anthropic)</strong> e <strong>DeepSeek via Groq</strong>.<br>
+      ⚡ Built com Python, Streamlit e Phidata.<br><br>
+      Artigo técnico completo no link da bio 👆<br><br>
+      <em>#DayTrade #InteligênciaArtificial #Python #Streamlit #LLM #Nasdaq #Phidata #DataScience #AIAgents #MercadoFinanceiro #Claude #DeepSeek</em>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     LINKEDIN CARD
+══════════════════════════════════ -->
+<div class="li-wrap">
+  <div class="section-label">LinkedIn — 1200 × 628 px</div>
+
+  <div class="li-card">
+
+    <!-- decorative chart line -->
+    <svg class="chart-line" viewBox="0 0 720 80" fill="none" preserveAspectRatio="none">
+      <polyline points="0,70 80,55 140,60 220,30 300,42 380,18 450,28 540,8 620,15 720,5" stroke="#00dc64" stroke-width="1.5" fill="none"/>
+      <polyline points="0,70 80,55 140,60 220,30 300,42 380,18 450,28 540,8 620,15 720,5 720,80 0,80" fill="rgba(0,220,100,0.04)"/>
+    </svg>
+
+    <div class="li-inner">
+      <!-- LEFT -->
+      <div class="li-left">
+        <div class="li-brand">
+          <div class="li-brand-dot"></div>
+          <div class="li-brand-name">Projeto JONH</div>
+        </div>
+
+        <div class="li-headline">
+          Day Trade<br>com <em>Agentes<br>de&nbsp;IA</em>
+        </div>
+
+        <div class="li-deck">
+          Arquitetura multi-agente que combina busca na web em tempo real, dados do Yahoo Finance e visualizações técnicas interativas — tudo em Python.
+        </div>
+
+        <div class="li-bottom">
+          <div class="li-tags-mini">
+            <span class="li-tag-mini">Python</span>
+            <span class="li-tag-mini">LLM</span>
+            <span class="li-tag-mini">Nasdaq</span>
+          </div>
+          <div class="li-cta-btn">Leia o artigo →</div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="li-right">
+        <div class="li-right-label">Time de Agentes</div>
+
+        <div class="li-agents">
+          <div class="li-agent-row">
+            <div class="li-agent-icon">🔍</div>
+            <div>
+              <div class="li-agent-name">Web Search Agent</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:1px;">DuckDuckGo · Notícias e fontes</div>
+            </div>
+            <div class="li-agent-desc">Busca</div>
+          </div>
+          <div class="li-agent-row">
+            <div class="li-agent-icon">📈</div>
+            <div>
+              <div class="li-agent-name">Finance Agent</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:1px;">Yahoo Finance · Fundamentos e preços</div>
+            </div>
+            <div class="li-agent-desc">Dados</div>
+          </div>
+          <div class="li-agent-row">
+            <div class="li-agent-icon">🎯</div>
+            <div>
+              <div class="li-agent-name">Coordenador Multi-AI</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:1px;">Phidata · Síntese e relatório final</div>
+            </div>
+            <div class="li-agent-desc">Síntese</div>
+          </div>
+        </div>
+
+        <div class="li-right-label" style="margin-top:4px;">Métricas do Projeto</div>
+        <div class="li-stats-row">
+          <div class="li-stat-card">
+            <div class="li-stat-val">3</div>
+            <div class="li-stat-lbl">Agentes<br>em equipe</div>
+          </div>
+          <div class="li-stat-card">
+            <div class="li-stat-val">6+</div>
+            <div class="li-stat-lbl">Modelos<br>LLM</div>
+          </div>
+          <div class="li-stat-card">
+            <div class="li-stat-val">RT</div>
+            <div class="li-stat-lbl">Análise<br>tempo real</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-label">Caption LinkedIn</div>
+    <div class="caption-text">
+      🚀 Acabei de publicar um projeto completo de <strong>Agentes de IA para Day Trade Analytics</strong> — do código à arquitetura, documentado em detalhes.<br><br>
+      O <em>JONH</em> (Jointed Organization of Not-neural Humans) é uma plataforma que usa <strong>arquitetura multi-agente com Phidata</strong> para analisar ações da Nasdaq em tempo real:<br><br>
+      ✅ <strong>3 agentes especializados</strong>: busca na web (DuckDuckGo), dados financeiros (Yahoo Finance) e coordenação (síntese final)<br>
+      ✅ <strong>Suporte a Claude (Anthropic) e DeepSeek/LLaMA (Groq)</strong> — troca de modelo em tempo real<br>
+      ✅ <strong>4 gráficos interativos</strong>: linha de preços, candlestick, médias móveis (SMA/EMA) e volume<br>
+      ✅ Interface 100% em <strong>Streamlit</strong>, com cache e gestão de estado<br><br>
+      O que mais me fascinou nesse projeto foi perceber que a <strong>orquestração dos agentes é o verdadeiro diferencial</strong> — não o modelo em si. Um coordenador que usa LLaMA 3.3 70B para síntese, enquanto os especialistas usam DeepSeek-R1, entrega resultados surpreendentemente coerentes.<br><br>
+      📄 Artigo técnico completo no link abaixo — inclui arquitetura, código comentado e discussão de casos de uso.<br><br>
+      💬 Você já usou IA no processo de análise de investimentos? Me conta nos comentários!<br><br>
+      <em>#InteligênciaArtificial #Python #DayTrade #LLM #AIAgents #Streamlit #DataScience #MercadoFinanceiro #Phidata #Anthropic #OpenSource #MachineLearning</em>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
